@@ -32,9 +32,9 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker login -u _json_key -p "`cat {{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}`" https://gcr.io
+        docker login -u _json_key -p "`cat ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}`" https://gcr.io
         docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} ./
-        docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
+        sudo -u $USER docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
 
     - name: Deploy to Cloud Run
       id: deploy
