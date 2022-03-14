@@ -5,7 +5,7 @@ const getAuthToken = async () => {
   let token = '';
 
   try {
-    const { data } = await axios.get('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=' + getEnvConstants().configurationURL, {
+    const { data } = await axios.get('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=' + getEnvConstants().configurationURL + '/', {
       headers: {
         'Metadata-Flavor': 'Google'
       },
