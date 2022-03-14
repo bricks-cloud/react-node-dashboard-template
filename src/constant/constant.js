@@ -1,10 +1,10 @@
 
-const PRODUCTION_ENV = 'my-app-nfhyx3cm5q-uc.a.run.app';
+const PRODUCTION_ENV = 'bricks-dashboard-nfhyx3cm5q-uc.a.run.app';
 const LOCAL_ENV = 'localhost';
 
 const envConstants = Object.freeze({
     [PRODUCTION_ENV]: Object.freeze({
-        configurationURL: '',
+        configurationURL: 'https://bricks-nfhyx3cm5q-uc.a.run.app',
     }),
     [LOCAL_ENV]: Object.freeze({
         configurationURL: '',
