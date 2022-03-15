@@ -11,10 +11,10 @@ const envConstants = Object.freeze({
     }),
 });
 
-const geEnvConstants = () => {
+const getEnvConstants = () => {
     const specificEnvConstants =  envConstants[window.location.hostname];
     const defaultConstants = envConstants[LOCAL_ENV];
     return specificEnvConstants || defaultConstants;
 };
 
-export default geEnvConstants;
+export default getEnvConstants;

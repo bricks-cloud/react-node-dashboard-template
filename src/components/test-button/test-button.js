@@ -2,7 +2,7 @@ import React from 'react';
 import { useTestGet } from '../../query/query';
 
 export const TestButton = () => {
-    const { refetch } = useTestGet({ retry: false });
+    const { refetch } = useTestGet({ refetchOnMount: false, retry: false });
 
     return <button onClick={() => refetch()}>Test</button>
 };
