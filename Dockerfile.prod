@@ -4,8 +4,7 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 COPY yarn.lock .
-RUN yarn ci --silent
-RUN yarn install --silent
+RUN yarn install
 COPY . ./
 RUN yarn run start-server
 
