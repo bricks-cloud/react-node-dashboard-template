@@ -31,10 +31,13 @@ app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
 app.use(createProxyMiddleware('/api/*', {
-    target: configurationURL,
-    headers: { 'Authorization': 'Bearer ' + getAuthToken() },
+  pathRewrite: {
+    '^/api/*': '/', // rewrite path
+  },
+  target: configurationURL,
+  headers: { 'Authorization': 'Bearer ' + getAuthToken() },
 }))
 
 app.listen(8080, () =>
-    console.log('Express server is running on localhost:8080')
+  console.log('Express server is running on localhost:8080')
 );
