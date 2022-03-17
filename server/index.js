@@ -38,6 +38,6 @@ app.use(createProxyMiddleware('/api/*', {
   headers: { 'Authorization': 'Bearer ' + getAuthToken() },
 }))
 
-app.listen(8080, () =>
-  console.log('Express server is running on localhost:8080')
+app.listen(3000, () =>
+  console.log('Express server is running on localhost:3000')
 );
