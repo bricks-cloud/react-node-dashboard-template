@@ -1,14 +1,14 @@
 version: '3.7'
 
 services:
-  my-app-dev:
+  bricks-dashboard-dev:
     container_name: bricks-dashboard-dev
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     volumes:
       - '.:/app'
       - '/app/node_modules'
     ports:
-      - 8080:8080
+      - 3000:3000
 

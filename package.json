@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-server": "react-scripts build && node ./server/index.js",
+    "start-server": "node ./server/index.js",
     "build": "react-scripts build",
     "docker-build-dev": "docker build -f ./Dockerfile -t my_app_dev .",
     "docker-build-prod": "docker build -f ./Dockerfile.prod -t my_app_prod .",
