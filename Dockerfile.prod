@@ -23,12 +23,12 @@ FROM node:16-slim
 WORKDIR /app
 
 # add app
-COPY --from=build /app/build /build
-COPY --from=build /app/package.json ./
-COPY --from=build /app/server/index.js /server/index.js
+COPY --from=build /app/build build
+COPY --from=build /app/package.json .
+COPY --from=build /app/server server
 
 # expose the port
-EXPOSE 8080
+EXPOSE 3000
 
 # start the server
-CMD ["npm", "run", "start-server"]
+CMD ["node", "."]

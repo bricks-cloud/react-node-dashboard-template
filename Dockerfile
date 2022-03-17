@@ -28,7 +28,7 @@ COPY --from=build package.json ./
 COPY --from=build /server /server
 
 # expose the port
-EXPOSE 8080
+EXPOSE 3000
 
 # start the server
-CMD ["npm", "run", "start-server"]
+CMD ["node", "."]
