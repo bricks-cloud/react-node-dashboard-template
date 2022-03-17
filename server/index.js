@@ -6,6 +6,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware')
 
 const configurationURL = 'http://bricks-nfhyx3cm5q-uc.a.run.app'
 
+
 const getAuthToken = async () => {
   let token = '';
 
@@ -33,6 +34,7 @@ app.use('/api/*', createProxyMiddleware({
   pathRewrite: {
     '^/api/*': '', // rewrite path
   },
+  changeOrigin: true,
   target: configurationURL,
   headers: { 'Authorization': 'Bearer ' + getAuthToken() },
 }))
