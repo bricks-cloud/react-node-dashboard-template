@@ -1,5 +1,6 @@
 const axios = require('axios');
 const express = require('express');
+const morgan = require('morgan')
 const bodyParser = require('body-parser');
 const path = require("path");
 const { createProxyMiddleware } = require('http-proxy-middleware')
@@ -26,13 +27,13 @@ const getAuthToken = async () => {
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(morgan('combined'))
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
 app.use(createProxyMiddleware('/api/*', {
   pathRewrite: {
-    '^/api/*': '/', // rewrite path
+    '^/api/*': '', // rewrite path
   },
   target: configurationURL,
   headers: { 'Authorization': 'Bearer ' + getAuthToken() },
