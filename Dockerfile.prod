@@ -25,7 +25,7 @@ WORKDIR /app
 # add app
 COPY --from=build /app/build /build
 COPY --from=build /app/package.json ./
-COPY --from=build /app/server /server
+COPY --from=build /app/server/index.js /server/index.js
 
 # expose the port
 EXPOSE 3000
