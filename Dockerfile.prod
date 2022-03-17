@@ -17,18 +17,8 @@ COPY . ./
 # build the react app
 RUN npm run build
 
-FROM node:16-slim
-
-# set working directory
-WORKDIR /app
-
-# add app
-COPY --from=build /app/build build
-COPY --from=build /app/package.json .
-COPY --from=build /app/server server
-
 # expose the port
 EXPOSE 3000
 
 # start the server
-CMD ["node", "."]
+CMD ["npm", "run", "start-server"]
