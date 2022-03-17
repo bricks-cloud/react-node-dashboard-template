@@ -24,8 +24,8 @@
     "start": "react-scripts start",
     "start-server": "node ./server/index.js",
     "build": "react-scripts build",
-    "docker-build-dev": "docker build -f ./Dockerfile -t my_app_dev .",
-    "docker-build-prod": "docker build -f ./Dockerfile.prod -t my_app_prod .",
+    "docker-build-dev": "docker build -f ./Dockerfile -t bricks_dashboard_dev .",
+    "docker-build-prod": "docker build -f ./Dockerfile.prod -t bricks_dashboard_prod .",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

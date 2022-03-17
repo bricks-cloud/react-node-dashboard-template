@@ -9,18 +9,26 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
-COPY yarn.lock .
-RUN yarn install
-RUN yarn add react-scripts@3.4.1 -g --silent
+COPY package-lock.json ./
+RUN npm ci --silent
+RUN npm install react-scripts@3.4.1 -g --silent
+COPY . ./
 
 # build the react app
-RUN yarn build
+RUN npm run build
+
+FROM node:16-slim
+
+# set working directory
+WORKDIR /app
 
 # add app
-COPY . ./
+COPY --from=build /build /build
+COPY --from=build package.json ./
+COPY --from=build /server /server
 
 # expose the port
 EXPOSE 3000
 
 # start the server
-CMD ["yarn", "run", "start-server"]
+CMD ["npm", "run", "start-server"]

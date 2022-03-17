@@ -1,4 +1,5 @@
-FROM node:16
+# build environment
+FROM node:16 as build
 
 # set working directory
 WORKDIR /app
@@ -8,13 +9,26 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
-COPY yarn.lock .
-RUN yarn install
-RUN yarn add react-scripts@3.4.1 -g --silent
-RUN yarn build
-
-# add app
+COPY package-lock.json ./
+RUN npm ci --silent
+RUN npm install react-scripts@3.4.1 -g --silent
 COPY . ./
 
-# start app
-CMD ["yarn", "start-server"]
+# build the react app
+RUN npm run build
+
+FROM node:16-slim
+
+# set working directory
+WORKDIR /app
+
+# add app
+COPY --from=build /build /build
+COPY --from=build package.json ./
+COPY --from=build /server /server
+
+# expose the port
+EXPOSE 3000
+
+# start the server
+CMD ["npm", "run", "start-server"]
