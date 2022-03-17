@@ -28,10 +28,7 @@ COPY --from=build /app/package.json ./
 COPY --from=build /app/server/index.js /server/index.js
 
 # expose the port
-EXPOSE 3000
-
-# set env port number
-ENV PORT 3000
+EXPOSE 8080
 
 # start the server
 CMD ["npm", "run", "start-server"]
