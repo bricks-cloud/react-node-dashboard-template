@@ -36,7 +36,7 @@ app.use('/api/*', createProxyMiddleware({
   },
   changeOrigin: true,
   target: configurationURL,
-  headers: { 'Authorization': 'Bearer ' + getAuthToken() },
+  headers: { 'Authorization': 'bearer ' + getAuthToken() },
 }))
 
 app.listen(3000, () =>
