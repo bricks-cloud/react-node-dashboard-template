@@ -20,7 +20,7 @@ module.exports = class AuthProvider {
 
     async getToken() {
         if (!this.isValidToken()) {
-            this.token = await getGoogleAuthToken(this.BIMS_CLIENT_ID);
+            this.token = await getGoogleAuthToken(this.audience);
         }
         return this.token;
     }

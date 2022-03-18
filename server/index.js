@@ -29,6 +29,7 @@ app.use('/api/*', createProxyMiddleware('/api', {
   onProxyReq: (request) => {
     const token = getToken()
     request.setHeader('Authorization', `Bearer ${token}` );
+    request.setHeader('Content-Type', 'application/json');
   },
 }))
 
