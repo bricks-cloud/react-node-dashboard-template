@@ -16,10 +16,7 @@ const getAuthToken = async () => {
       },
     });
     token = data;
-  } catch (error) {
-    console.error(error);
   } finally {
-    console.log(token);
     return token;
   };
 };
@@ -36,10 +33,10 @@ app.use('/api/*', createProxyMiddleware({
   },
   changeOrigin: true,
   target: configurationURL,
-  onProxyReq: (proxyReq, req, res) => {
-    proxyReq.setHeader('Authorization', 'Bearer ' + getAuthToken());
-    console.log(req);
-    console.log(res);
+  onProxyReq: async (proxyReq, req, res) => {
+    const authToken = await getAuthToken()
+    proxyReq.setHeader('Authorization', 'Bearer ' + authToken);
+    console.log(authToken);
   },
 }))
 
