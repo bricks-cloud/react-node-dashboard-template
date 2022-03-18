@@ -18,11 +18,11 @@ module.exports = class AuthProvider {
         this.token = "";
     }
 
-    async getAuthHeader() {
+    async getToken() {
         if (!this.isValidToken()) {
             this.token = await getGoogleAuthToken(this.BIMS_CLIENT_ID);
         }
-        return { Authorization: `Bearer ${this.token}` };
+        return this.token;
     }
 
     isValidToken() {

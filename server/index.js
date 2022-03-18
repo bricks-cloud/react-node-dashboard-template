@@ -12,22 +12,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
-const getMiddleware = async (req, res) => {
-  const authHeader = await authProvider.getAuthHeader();
+const getToken = async () => {
+  const token = await authProvider.getToken();
 
-  console.log(authHeader);
+  console.log(token);
 
-  return createProxyMiddleware({
-    pathRewrite: {
-      '^/api/*': '', // rewrite path
-    },
-    changeOrigin: true,
-    target: configurationURL,
-    headers: authHeader,
-  })(req, res)
+  return token;
 };
 
-app.use('/api/*', (req, res) => getMiddleware(req, res))
+app.use('/api/*', createProxyMiddleware('/api', {
+  pathRewrite: {
+    '^/api/*': '', // rewrite path
+  },
+  changeOrigin: true,
+  target: configurationURL,
+  onProxyReq: (request) => {
+    const token = getToken()
+    request.setHeader('Authorization', `Bearer ${token}` );
+  },
+}))
 
 app.listen(3000, () =>
   console.log('Express server is running on localhost:3000')
