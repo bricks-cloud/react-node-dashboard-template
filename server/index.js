@@ -37,7 +37,7 @@ app.use('/api/*', createProxyMiddleware({
   changeOrigin: true,
   target: configurationURL,
   onProxyReq: (proxyReq, req, res) => {
-    proxyReq.setHeader('x-Authorization', 'Bearer ' + getAuthToken());
+    proxyReq.setHeader('Authorization', 'Bearer ' + getAuthToken());
     console.log(req);
     console.log(res);
   },
