@@ -10,11 +10,15 @@ const configurationURL = 'http://bricks-nfhyx3cm5q-uc.a.run.app'
 const getAuthToken = async () => {
   let token = '';
   try {
-    const { data } = await axios.get('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=' + configurationURL + '/', {
+    const response  = await axios.get('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=' + configurationURL + '/', {
       headers: {
         'Metadata-Flavor': 'Google'
       },
     });
+
+    const { data } = response;
+
+    console.log(response);
     token = data;
   } finally {
     return token;
