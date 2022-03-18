@@ -9,7 +9,6 @@ const configurationURL = 'http://bricks-nfhyx3cm5q-uc.a.run.app'
 
 const getAuthToken = async () => {
   let token = '';
-
   try {
     const { data } = await axios.get('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=' + configurationURL + '/', {
       headers: {
@@ -30,13 +29,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
+let authToken = getAuthToken();
+
 app.use('/api/*', createProxyMiddleware({
   pathRewrite: {
     '^/api/*': '', // rewrite path
   },
   changeOrigin: true,
   target: configurationURL,
-  headers: { 'Authorization': 'bearer ' + getAuthToken() },
+  headers: { 'Authorization': 'Bearer ' + authToken },
 }))
 
 app.listen(3000, () =>
