@@ -20,6 +20,7 @@ module.exports = class AuthProvider {
 
     async getToken() {
         if (!this.isValidToken()) {
+            console.log(this.audience);
             this.token = await getGoogleAuthToken(this.audience);
         }
         return this.token;
