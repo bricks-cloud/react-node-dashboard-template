@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require("path");
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
-const configurationURL = 'http://bricks-nfhyx3cm5q-uc.a.run.app'
+const configurationURL = 'https://bricks-nfhyx3cm5q-uc.a.run.app'
 
 
 const getAuthToken = async () => {
