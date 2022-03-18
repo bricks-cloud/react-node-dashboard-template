@@ -11,6 +11,7 @@
     "express": "^4.17.3",
     "google-auth-library": "^7.14.0",
     "http-proxy-middleware": "^2.0.4",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "node-env-run": "^4.0.2",
     "nodemon": "^2.0.15",
