@@ -3,11 +3,11 @@ name: GitHub Actions Demo
 on:
   push:
     branches:
-      - main
+      - test-backend-connection
 
 env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
-  SERVICE: my-app
+  SERVICE: bricks-dashboard
   REGION: us-central1
 
 jobs:
@@ -24,9 +24,9 @@ jobs:
         project_id: ${{ secrets.PROJECT_ID }}
         export_default_credentials: true
 
-    - name: Build and Push Container
+    - name: Build Docker image
       run: |-
-        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} ./
+        docker build -f Dockerfile.prod -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} ./
 
     - name: Authorize Docker push
       run: |-
