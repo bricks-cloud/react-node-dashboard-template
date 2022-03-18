@@ -29,7 +29,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
-let authToken = getAuthToken();
 
 app.use('/api/*', createProxyMiddleware({
   pathRewrite: {
@@ -37,7 +36,11 @@ app.use('/api/*', createProxyMiddleware({
   },
   changeOrigin: true,
   target: configurationURL,
-  headers: { 'Authorization': 'Bearer ' + authToken },
+  onProxyReq: (proxyReq, req, res) => {
+    proxyReq.setHeader('x-Authorization', 'Bearer ' + getAuthToken());
+    console.log(req);
+    console.log(res);
+  },
 }))
 
 app.listen(3000, () =>
