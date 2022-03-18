@@ -4,23 +4,23 @@ const bodyParser = require('body-parser');
 const path = require("path");
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
-const configurationURL = 'https://bricks-nfhyx3cm5q-uc.a.run.app'
+const configurationURL = 'http://bricks-nfhyx3cm5q-uc.a.run.app'
 
 
 const getAuthToken = async () => {
   let token = '';
   try {
-    const response  = await axios.get('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=' + configurationURL + '/', {
+    const { data } = await axios.get('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/identity?audience=' + configurationURL + '/', {
       headers: {
         'Metadata-Flavor': 'Google'
       },
     });
-
-    const { data } = response;
-
-    console.log(response);
     token = data;
+  } catch (error) {
+    console.error(error);
   } finally {
+    console.log("this is the token");
+    console.log(token);
     return token;
   };
 };
@@ -30,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
+let authToken = getAuthToken();
 
 app.use('/api/*', createProxyMiddleware({
   pathRewrite: {
@@ -37,11 +38,7 @@ app.use('/api/*', createProxyMiddleware({
   },
   changeOrigin: true,
   target: configurationURL,
-  onProxyReq: async (proxyReq, req, res) => {
-    const authToken = await getAuthToken()
-    proxyReq.setHeader('Authorization', 'Bearer ' + authToken);
-    console.log(authToken);
-  },
+  headers: { 'Authorization': 'Bearer ' + authToken },
 }))
 
 app.listen(3000, () =>
