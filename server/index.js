@@ -20,16 +20,26 @@ const getToken = async () => {
   return token;
 };
 
+// auth middleware on proxy request
+app.use((req, _, next) => {
+  if (req) {
+    getToken().then((token) => {
+      if (token) {
+        req.headers["Authorization"] = `Bearer ${token}`
+      }
+      next()
+    })
+  } else {
+    next()
+  }
+})
+
 app.use('/api/*', createProxyMiddleware('/api', {
   pathRewrite: {
     '^/api/*': '', // rewrite path
   },
   changeOrigin: true,
   target: configurationURL,
-  onProxyReq: (request) => {
-    const token = getToken()
-    request.setHeader('Authorization', `Bearer ${token}` );
-  },
 }))
 
 app.listen(3000, () =>
